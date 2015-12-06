@@ -3,25 +3,21 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>shenry.tebot</groupId>
-  <artifactId>telegram-bot-1</artifactId>
+  <artifactId>telegram-client</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>telegram-bot-1</name>
+  <name>telegram-client</name>
   <url>http://maven.apache.org</url>
 
   <properties>
     <java.version>1.8</java.version>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
   <dependencies>
-    <dependency>
-      <groupId>shenry.tebot</groupId>
-      <artifactId>telegram-client</artifactId>
-      <version>1.0-SNAPSHOT</version>
-    </dependency>
-
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>

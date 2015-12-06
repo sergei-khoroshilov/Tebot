@@ -3,19 +3,27 @@ package shenry.tebot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import shenry.tebot.annotation.TebotController;
 import shenry.tebot.annotation.TebotMapping;
-import shenry.tebot.api.Message;
-import shenry.tebot.api.Update;
 import shenry.tebot.controller.HelloController;
-import shenry.tebot.http.GetUpdatesRequest;
-import shenry.tebot.http.SendMessageRequest;
+import shenry.tebot.telegramclient.HttpTelegramClient;
+import shenry.tebot.telegramclient.TelegramClient;
+import shenry.tebot.telegramclient.requests.GetUpdatesRequest;
+import shenry.tebot.telegramclient.requests.SendMessageRequest;
+import shenry.tebot.telegramclient.types.Message;
+import shenry.tebot.telegramclient.types.Update;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.util.*;
-import java.util.concurrent.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Hello world!
@@ -29,9 +37,6 @@ public class App
     private final static Logger logger = LoggerFactory.getLogger(App.class);
 
     private static Map<String, MethodWithClass> mappings = new HashMap<>();
-
-    private static final BlockingQueue<Update> updatesQueue = new ArrayBlockingQueue<Update>(1000);
-
 
     private static class MethodWithClass {
         private Method method;

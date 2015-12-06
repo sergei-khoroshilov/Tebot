@@ -1,12 +1,9 @@
 package shenry.tebot.controller;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import shenry.tebot.annotation.TebotController;
 import shenry.tebot.annotation.TebotMapping;
-import shenry.tebot.annotation.TebotMappings;
-import shenry.tebot.api.Message;
-import shenry.tebot.api.User;
+import shenry.tebot.telegramclient.types.*;
 
 @Component
 @TebotController

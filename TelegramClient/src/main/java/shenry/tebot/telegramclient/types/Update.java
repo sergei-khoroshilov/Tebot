@@ -1,4 +1,4 @@
-package shenry.tebot.api;
+package shenry.tebot.telegramclient.types;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;

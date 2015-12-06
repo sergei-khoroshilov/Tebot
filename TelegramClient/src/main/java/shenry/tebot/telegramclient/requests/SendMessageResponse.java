@@ -1,6 +1,6 @@
-package shenry.tebot.http;
+package shenry.tebot.telegramclient.requests;
 
-import shenry.tebot.api.Message;
+import shenry.tebot.telegramclient.types.Message;
 
 /**
  * Created by shenry on 14.11.2015.

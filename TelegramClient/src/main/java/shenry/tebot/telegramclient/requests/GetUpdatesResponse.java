@@ -1,7 +1,6 @@
-package shenry.tebot.http;
+package shenry.tebot.telegramclient.requests;
 
-import shenry.tebot.api.Message;
-import shenry.tebot.api.Update;
+import shenry.tebot.telegramclient.types.Update;
 
 import java.util.List;
 

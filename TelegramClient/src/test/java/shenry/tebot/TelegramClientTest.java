@@ -5,7 +5,8 @@ import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestTemplate;
-import shenry.tebot.api.*;
+import shenry.tebot.telegramclient.HttpTelegramClient;
+import shenry.tebot.telegramclient.types.*;
 
 import java.io.IOException;
 import java.net.Proxy;

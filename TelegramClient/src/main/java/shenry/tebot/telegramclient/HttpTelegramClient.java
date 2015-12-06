@@ -1,13 +1,13 @@
-package shenry.tebot;
+package shenry.tebot.telegramclient;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.DefaultResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
-import shenry.tebot.api.Message;
-import shenry.tebot.api.Update;
-import shenry.tebot.api.User;
-import shenry.tebot.http.*;
+import shenry.tebot.telegramclient.types.Message;
+import shenry.tebot.telegramclient.types.Update;
+import shenry.tebot.telegramclient.types.User;
+import shenry.tebot.telegramclient.requests.*;
 
 import java.io.IOException;
 import java.net.Proxy;

@@ -1,9 +1,9 @@
-package shenry.tebot;
+package shenry.tebot.telegramclient;
 
-import shenry.tebot.api.Message;
-import shenry.tebot.api.Update;
-import shenry.tebot.api.User;
-import shenry.tebot.http.*;
+import shenry.tebot.telegramclient.types.Message;
+import shenry.tebot.telegramclient.types.Update;
+import shenry.tebot.telegramclient.types.User;
+import shenry.tebot.telegramclient.requests.*;
 
 import java.io.IOException;
 import java.util.List;

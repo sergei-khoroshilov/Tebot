@@ -1,4 +1,4 @@
-package shenry.tebot.http;
+package shenry.tebot.telegramclient.requests;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;

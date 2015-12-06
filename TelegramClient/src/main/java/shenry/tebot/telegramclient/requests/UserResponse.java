@@ -1,6 +1,6 @@
-package shenry.tebot.http;
+package shenry.tebot.telegramclient.requests;
 
-import shenry.tebot.api.User;
+import shenry.tebot.telegramclient.types.User;
 
 /**
  * Created by shenry on 01.10.2015.

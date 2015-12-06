@@ -1,4 +1,4 @@
-package shenry.tebot;
+package shenry.tebot.telegramclient;
 
 /**
  * Created by shenry on 15.11.2015.
