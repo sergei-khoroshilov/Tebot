@@ -16,15 +16,34 @@ import java.util.List;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 
-/**
- * Created by shenry on 02.10.2015.
- */
 public class TelegramClientTest {
 
     private final String API_KEY = "SOME_KEY";
 
     private final RestTemplate restTemplate = new RestTemplate();
     private final MockRestServiceServer mockServer = MockRestServiceServer.createServer(restTemplate);
+
+    @Test
+    public void anyMethod_Error() {
+        HttpTelegramClient client = getClient();
+        String getMeUrl = getCommandUrl("/getMe");
+        String errorDescription = "Error description here";
+        String responseJson = "{\"ok\":false,\"description\":\"" + errorDescription + "\"}";
+
+        mockServer.expect(requestTo(getMeUrl))
+                  .andRespond(withSuccess(responseJson, MediaType.APPLICATION_JSON));
+
+        boolean thrown = false;
+
+        try {
+            User user = client.getMe();
+        } catch (IOException ex) {
+            thrown = true;
+            Assert.assertEquals(ex.getMessage(), errorDescription);
+        }
+
+        Assert.assertEquals(true, thrown);
+    }
 
     @Test
     public void getMe_Success() throws IOException {
@@ -39,8 +58,6 @@ public class TelegramClientTest {
         User actualUser = client.getMe();
 
         mockServer.verify();
-        //ssert.assertEquals(true, response.isOk());
-        //Assert.assertEquals("", response.getDescription());
         Assert.assertEquals(expectedUser, actualUser);
     }
 
@@ -79,14 +96,12 @@ public class TelegramClientTest {
         List<Update> actualUpdates = client.getUpdates();
 
         mockServer.verify();
-        //Assert.assertEquals(true, response.isOk());
-        //Assert.assertEquals("", response.getDescription());
         Assert.assertEquals(expectedUpdates, actualUpdates);
     }
 
     private HttpTelegramClient getClient() {
 
-        return new HttpTelegramClient(API_KEY) {
+        return new HttpTelegramClient(API_KEY, Proxy.NO_PROXY) {
 
             @Override
             protected RestTemplate getRestTemplate(Proxy proxy) {
@@ -94,7 +109,6 @@ public class TelegramClientTest {
             }
         };
 
-        //return new TelegramClient(API_KEY);
     }
 
     private String getCommandUrl(String command) {
