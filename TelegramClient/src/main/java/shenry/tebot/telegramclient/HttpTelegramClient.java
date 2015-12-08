@@ -1,5 +1,7 @@
 package shenry.tebot.telegramclient;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.DefaultResponseErrorHandler;
@@ -19,6 +21,7 @@ import java.util.List;
  * Created by shenry on 02.10.2015.
  */
 public class HttpTelegramClient implements TelegramClient {
+    private static final Logger logger = LoggerFactory.getLogger(HttpTelegramClient.class);
 
     private static final String DEFAULT_API_ADDRESS = "https://api.telegram.org";
 
@@ -34,6 +37,10 @@ public class HttpTelegramClient implements TelegramClient {
         this(DEFAULT_API_ADDRESS, token, null);
     }
 
+    public HttpTelegramClient(String token, Proxy proxy) {
+        this(DEFAULT_API_ADDRESS, token, proxy);
+    }
+
     public HttpTelegramClient(String apiAddress, String token, Proxy proxy) {
         if (token == null || token.isEmpty()) {
             throw new IllegalArgumentException("Token cannot be empty");
@@ -43,7 +50,7 @@ public class HttpTelegramClient implements TelegramClient {
             try {
                 proxy = getSystemProxy();
             } catch (Exception ex) {
-                // TODO write to log
+                logger.error("Error getting system proxy", ex);
             }
         }
 
