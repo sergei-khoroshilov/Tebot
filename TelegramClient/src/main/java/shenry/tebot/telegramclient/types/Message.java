@@ -6,9 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-/**
- * Created by shenry on 02.10.2015.
- */
 @ToString
 @EqualsAndHashCode
 public class Message {

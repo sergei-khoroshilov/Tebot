@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 /**
- * Created by shenry on 01.10.2015.
+ * Base class for all responses
  */
 @NoArgsConstructor
 @AllArgsConstructor

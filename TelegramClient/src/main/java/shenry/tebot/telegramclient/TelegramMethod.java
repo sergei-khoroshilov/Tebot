@@ -1,8 +1,5 @@
 package shenry.tebot.telegramclient;
 
-/**
- * Created by shenry on 15.11.2015.
- */
 public enum TelegramMethod {
     GET_ME("/getMe"),
     SEND_MESSAGE("/sendMessage"),

@@ -13,7 +13,7 @@ import lombok.ToString;
 public class SendMessageRequest {
     /**
      * Unique identifier for the target chat or username of the target channel
-     * (in the format @channelusername
+     * (in the format @channelusername)
      */
     @JsonProperty("chat_id")
     @Getter

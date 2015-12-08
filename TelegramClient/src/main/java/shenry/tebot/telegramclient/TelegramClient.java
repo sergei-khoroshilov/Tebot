@@ -8,9 +8,6 @@ import shenry.tebot.telegramclient.requests.*;
 import java.io.IOException;
 import java.util.List;
 
-/**
- * Created by shenry on 14.11.2015.
- */
 public interface TelegramClient {
     User getMe() throws IOException;
 

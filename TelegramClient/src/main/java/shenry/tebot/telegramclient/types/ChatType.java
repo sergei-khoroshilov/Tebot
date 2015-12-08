@@ -9,6 +9,7 @@ import java.util.Map;
 public enum ChatType {
     PRIVATE("private"),
     GROUP("group"),
+    SUPERGROUP("supergroup"),
     CHANNEL("channel");
 
     private final String value;

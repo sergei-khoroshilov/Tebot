@@ -8,11 +8,6 @@ import shenry.tebot.telegramclient.HttpTelegramClient;
 import shenry.tebot.telegramclient.TelegramClient;
 import shenry.tebot.telegramclient.types.User;
 
-/**
- * Hello world!
- *
- */
-
 @Configuration
 @ComponentScan(value = "shenry.tebot")
 public class App 
