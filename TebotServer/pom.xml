@@ -3,11 +3,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>shenry.tebot</groupId>
-  <artifactId>telegram-bot-1</artifactId>
+  <artifactId>tebot-server</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>telegram-bot-1</name>
+  <name>>tebot-server</name>
   <url>http://maven.apache.org</url>
 
   <properties>
