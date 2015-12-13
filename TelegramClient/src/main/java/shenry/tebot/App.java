@@ -18,11 +18,14 @@ public class App
     {
         logger.debug("Hello, world!");
 
-        TelegramClient client = new HttpTelegramClient("Api key here");
+        try {
+            TelegramClient client = new HttpTelegramClient("Api key here1");
 
-        User result = client.getMe();
-        System.out.println(result);
-
+            User result = client.getMe();
+            System.out.println(result);
+        } catch (Exception ex) {
+            logger.error("", ex);
+        }
 
 /*
         SendMessageRequest sendMessageRequest = new SendMessageRequest();

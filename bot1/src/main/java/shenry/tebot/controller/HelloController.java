@@ -3,6 +3,7 @@ package shenry.tebot.controller;
 import org.springframework.stereotype.Component;
 import shenry.tebot.annotation.TebotController;
 import shenry.tebot.annotation.TebotMapping;
+import shenry.tebot.telegramclient.requests.SendMessageRequest;
 import shenry.tebot.telegramclient.types.*;
 
 @Component
@@ -16,9 +17,16 @@ public class HelloController {
     }
 
     @TebotMapping("/helloMessage")
-    public Message helloMessage() {
-        Message message = new Message();
-        message.setSender(new User(1, "shenry", "", ""));
+    public SendMessageRequest helloMessage(Update update) {
+        SendMessageRequest message = new SendMessageRequest();
+        message.setChatId(Integer.toString(update.getMessage().getChat().getId()));
+        message.setText("Hello, world");
+
+        return message;
+    }
+
+    @TebotMapping("/echo")
+    public String echo(String message) {
         return message;
     }
 }

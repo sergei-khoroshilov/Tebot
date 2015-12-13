@@ -17,9 +17,6 @@ import java.net.ProxySelector;
 import java.net.URI;
 import java.util.List;
 
-/**
- * Created by shenry on 02.10.2015.
- */
 public class HttpTelegramClient implements TelegramClient {
     private static final Logger logger = LoggerFactory.getLogger(HttpTelegramClient.class);
 
