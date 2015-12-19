@@ -1,11 +1,13 @@
 package shenry.tebot.argconverter;
 
+import org.springframework.stereotype.Component;
 import shenry.tebot.telegramclient.types.Message;
 import shenry.tebot.telegramclient.types.Update;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Component
 public class ArgConverterFactory {
 
     private final Map<Class, ArgConverter> converters = new HashMap<>();

@@ -1,19 +1,19 @@
 package shenry.tebot.resultprocessor;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import shenry.tebot.telegramclient.TelegramClient;
 import shenry.tebot.telegramclient.requests.SendMessageRequest;
-import shenry.tebot.telegramclient.types.Message;
 
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by shenry on 09.12.2015.
- */
+@Component
 public class ResultProcessorFactory {
 
     private final Map<Class, ResultProcessor> processors = new HashMap<>();
 
+    @Autowired
     public ResultProcessorFactory(TelegramClient client) {
         processors.put(Void.class, new NoOpResultProcessor());
         processors.put(String.class, new StringResultProcessor(client));

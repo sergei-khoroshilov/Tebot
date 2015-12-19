@@ -7,14 +7,16 @@ import com.google.common.collect.Multimaps;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Component;
 import shenry.tebot.annotation.TebotController;
 import shenry.tebot.annotation.TebotMapping;
 import shenry.tebot.argconverter.ArgConverter;
 import shenry.tebot.argconverter.ArgConverterFactory;
+import shenry.tebot.config.ApplicationSettings;
 import shenry.tebot.resultprocessor.ResultProcessor;
 import shenry.tebot.resultprocessor.ResultProcessorFactory;
-import shenry.tebot.telegramclient.HttpTelegramClient;
 import shenry.tebot.telegramclient.TelegramClient;
 import shenry.tebot.telegramclient.requests.GetUpdatesRequest;
 import shenry.tebot.telegramclient.types.Update;
@@ -29,36 +31,41 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+@Component
 public class TebotServer {
     private static final Logger logger = LoggerFactory.getLogger(TebotServer.class);
 
-    private final ExecutorService executorService;
-
-    private final CommandExtractor commandExtractor = new CommandExtractor();
-    private final ArgConverterFactory argConverterFactory = new ArgConverterFactory();
+    private final CommandExtractor commandExtractor;
+    private final ArgConverterFactory argConverterFactory;
     private final ResultProcessorFactory resultProcessorFactory;
-    private final Multimap<String, UpdateMethodInvoker> mappings;
-
     private final TelegramClient client;
-
     private final ApplicationContext applicationContext;
 
-    private Thread listenThread;
+    private final Multimap<String, UpdateMethodInvoker> handlers;
 
+    private Thread listenThread;
+    private final ExecutorService executorService;
     private final AtomicBoolean started = new AtomicBoolean(false);
 
-    public TebotServer(String telegramToken, ApplicationContext applicationContext, int threadsCount) {
+    @Autowired
+    public TebotServer(TelegramClient client,
+                       ApplicationSettings settings,
+                       CommandExtractor commandExtractor,
+                       ArgConverterFactory argConverterFactory,
+                       ResultProcessorFactory resultProcessorFactory,
+                       ApplicationContext applicationContext) {
+        this.client = client;
+        this.commandExtractor = commandExtractor;
+        this.argConverterFactory = argConverterFactory;
+        this.resultProcessorFactory = resultProcessorFactory;
         this.applicationContext = applicationContext;
 
-        client = new HttpTelegramClient(telegramToken);
-
-        resultProcessorFactory = new ResultProcessorFactory(client);
-        mappings = loadHandlers(applicationContext);
+        handlers = loadHandlers(applicationContext);
 
         ThreadFactory threadFactory = new ThreadFactoryBuilder()
                 .setNameFormat("TebotServerPool-thread-%d")
                 .build();
-        executorService = Executors.newFixedThreadPool(threadsCount, threadFactory);
+        executorService = Executors.newFixedThreadPool(settings.getWorkerThreadsCount(), threadFactory);
     }
 
     public void start() {
@@ -140,7 +147,7 @@ public class TebotServer {
         Predicate<String> commandPredicate = key -> key.equalsIgnoreCase(command)
                                                  || key.isEmpty();
 
-        Collection<UpdateMethodInvoker> methods = Multimaps.filterKeys(mappings, commandPredicate)
+        Collection<UpdateMethodInvoker> methods = Multimaps.filterKeys(handlers, commandPredicate)
                                                            .values();
 
         for (UpdateMethodInvoker method : methods) {
@@ -181,7 +188,7 @@ public class TebotServer {
 
                         handlers.put(command, methodInvoker);
 
-                        logger.info("added tebot handler \"{}\" - {}", command, method);
+                        logger.info("Added tebot handler \"{}\" - {}", command, method);
                     } catch (Exception ex) {
                         logger.error("Cannot create arg converters for method " + method, ex);
                         continue;

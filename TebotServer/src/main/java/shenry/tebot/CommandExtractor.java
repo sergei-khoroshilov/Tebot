@@ -1,5 +1,8 @@
 package shenry.tebot;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class CommandExtractor {
     /**
      * Get command from message
