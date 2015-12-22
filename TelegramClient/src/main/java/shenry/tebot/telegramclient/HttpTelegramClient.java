@@ -43,14 +43,6 @@ public class HttpTelegramClient implements TelegramClient {
             throw new IllegalArgumentException("Token cannot be empty");
         }
 
-        if (proxy == null) {
-            try {
-                proxy = getSystemProxy();
-            } catch (Exception ex) {
-                logger.error("Error getting system proxy", ex);
-            }
-        }
-
         this.apiAddress = apiAddress;
         this.token = token;
 
@@ -67,22 +59,12 @@ public class HttpTelegramClient implements TelegramClient {
     // For unit testing
     protected RestTemplate getRestTemplate(Proxy proxy) {
         SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
-        if (proxy == null) {
+
+        if (proxy != null) {
             factory.setProxy(proxy);
         }
 
         return new RestTemplate(factory);
-    }
-
-    private Proxy getSystemProxy() throws Exception {
-        System.setProperty("java.net.useSystemProxies", "true");
-
-        return ProxySelector.getDefault()
-                .select(new URI(apiAddress))
-                .stream()
-                .filter(p -> p != null)
-                .findFirst()
-                .orElse(Proxy.NO_PROXY);
     }
 
     // endregion
